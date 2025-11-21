@@ -47,9 +47,22 @@ Public Class Form1
                 Dim Table As New DataTable()
                 adapter.Fill(Table)
                 DataGridView1.DataSource = Table
+                DataGridView1.Columns("id").Visible = False
             End Using
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentDoubleClick
+        If e.RowIndex >= 0 Then
+            Dim selectedRow As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
+            TextBoxName.Text = selectedRow.Cells("name").Value.ToString
+            TextBoxName.Text = selectedRow.Cells("age").Value.ToString
+            TextBoxName.Text = selectedRow.Cells("email").Value.ToString
+
+            TextBoxHiddenId.Text = selectedRow.Cells("id").Value.ToString
+        End If
+
     End Sub
 End Class
