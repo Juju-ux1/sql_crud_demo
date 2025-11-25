@@ -20,7 +20,6 @@ Public Class Form1
         Dim query As String = "INSERT INTO `crud_demo_db`.`students_tbl` (`name`, `age`, `email`) VALUES (@name, @age, @email);"
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=crud_demo_db; ")
-                conn.Open()
                 Using cmd As New MySqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@name", TextBoxName.Text)
                     cmd.Parameters.AddWithValue("@age", CInt(TextBoxAge.Text))
@@ -40,7 +39,7 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles ButtonRead.Click
-        Dim query As String = "SELECT name, age, email FROM crud_demo_db.students_tbl;"
+        Dim query As String = "SELECT * FROM crud_demo_db.students_tbl;"
         Try
             Using conn As New MySqlConnection("server=localhost; userid=root; password=root; database=crud_demo_db; ")
                 Dim adapter As New MySqlDataAdapter(query, conn)
@@ -64,5 +63,9 @@ Public Class Form1
             TextBoxHiddenId.Text = selectedRow.Cells("id").Value.ToString
         End If
 
+    End Sub
+
+    Private Sub ButtonUpdate_Click(sender As Object, e As EventArgs) Handles ButtonUpdate.Click
+        Dim query As String = "UPDATE `crud_demo_db`.`students_tbl` SET `name` = @name, `age` = @age, `email` = @email WHERE (`id` = @id);"
     End Sub
 End Class
